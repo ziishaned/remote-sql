@@ -74,6 +74,8 @@
 	</div>
 </div>
 <script>
+	
+
 	var dbConnected = "<?php echo $this->session->flashdata('db_connected'); ?>";
 	if (dbConnected) {
 		$.toast({
@@ -103,4 +105,18 @@
 		    hideAfter: 5000
 		});
 	};  
+	var dbDropped = "<?php echo $this->session->flashdata('db_dropped'); ?>";
+	if (dbDropped) {
+		$.toast({
+		    heading: 'Query Result:',
+		    text: dbDropped,
+		    showHideTransition: 'fade',
+		    icon: 'success',
+		    position: {
+		        left: 600,
+		        top: 120
+		    },
+		    stack: false
+		});
+	}; 
 </script>

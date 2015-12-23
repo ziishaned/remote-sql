@@ -108,9 +108,17 @@ class Rsql extends CI_Controller {
 				if ($db->error()['code'] AND $db->error()['message']) {
 					$data['query_error'] = $db->error();
 				} else {
-					$data['query_result'] = $result->result_array();
-					$data['fields_name'] = $result->list_fields();
-					$data['num_rows'] = $result->num_rows();
+					$query = explode(" ", $query);
+					$db = $query[2];
+					if ($this->session->userdata('current_db') === $db) {
+						$this->session->unset_userdata('db_slug');
+						$this->session->unset_userdata('current_db');
+						$this->session->set_flashdata('db_dropped', 'Database successfully dropped.');
+						redirect('/rsql/con_db');
+					} else {
+						$this->session->set_flashdata('db_dropped', 'Database successfully dropped.');
+						redirect('/rsql/query');
+					}
 				}
 			}
 
@@ -180,7 +188,7 @@ class Rsql extends CI_Controller {
 		$this->session->unset_userdata('db_slug');
 		$this->session->unset_userdata('current_db');
 		$this->session->set_flashdata('disconnected_success', 'You are successfully disconnected from database.');
-		redirect('rsql/con_db');
+		redirect('/rsql/con_db');
 	}
 
 }
