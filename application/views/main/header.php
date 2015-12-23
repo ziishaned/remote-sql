@@ -68,21 +68,3 @@
 				</div>
 			</div>
 		<?php endif ?>
-
-		<script>
-
-			// dbLi();
-			// $(window).resize(function() {
-			// 	dbLi();
-			// });
-
-			// function dbLi() {
-			// 	var width = $(window).width();
-			// 	if (width <= 767) {
-			// 		$(".db_li").removeAttr('style').css({'text-align': 'center'});
-			// 		return;
-			// 	}
-			// 	var left = (($(window).width() - $('.nav.navbar-nav').offset().left) - $('.db_li').offset().left - $('.db_li').width()) / 2;
-			// 	$(".db_li").css({'left': left, 'position': 'relative'});
-			// }
-		</script>
