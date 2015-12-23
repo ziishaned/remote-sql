@@ -10,7 +10,6 @@
 		</div>
 	</div>
 <?php endif ?>
-<?php //if($fields_name) { var_dump($fields_name); }; ?>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="jumbotron brand-intro query-con">
@@ -74,3 +73,19 @@
 		</div>
 	</div>
 </div>
+<script>
+	var dbConnected = "<?php echo $this->session->flashdata('db_connected'); ?>";
+	if (dbConnected) {
+		$.toast({
+			heading: 'Ohh WOW!:',
+		    text: dbConnected,
+		    showHideTransition: 'slide',
+		    icon: 'success',
+		    position: {
+		        left: 600,
+		        top: 120
+		    },
+		    stack: false
+		});
+	};  
+</script>

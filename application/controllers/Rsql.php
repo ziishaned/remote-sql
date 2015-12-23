@@ -137,6 +137,7 @@ class Rsql extends CI_Controller {
 				$this->session->set_userdata('db_slug', $slug);
 				$this->session->set_userdata('current_db', $input['dbname']);
 
+				$this->session->set_flashdata("db_connected", "Database Successfully Connected.");
 				redirect('/rsql/query');			
 			} else {
 				$this->session->set_flashdata("db_not_found", "Database not Found on server.");
