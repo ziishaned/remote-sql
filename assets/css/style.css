@@ -1,0 +1,318 @@
+body {
+    /*overflow: hidden;*/
+    background-color: #FFF;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+label, h1, h2, h3, h5, h6, p, input, li, a {
+    /*font-family: 'Fira Sans', "Aller", Helvetica, Arial, sans-serif !important;*/
+    font-family: "Aller", Helvetica, Arial, sans-serif !important;
+    color: #333;
+}
+
+#login-form, #rsql-form {
+    position: relative;
+    top: 185px;	
+}
+
+a.login-form-btn {
+	/*padding-left: 55px !important;
+    padding-right: 55px !important;*/
+}
+
+.login-form-btn-li, .rsql-form-btn-li {
+	left: 55px;
+}
+
+#login-form form.login, #rsql-form form.rsql {
+    background-color: white;
+	padding-left: 45px !important;
+	border: 1px solid #DDDDDD;
+    border-top: 0px;
+    padding: 29px 22px 29px 22px;
+    border-radius: 0px 0px 4px 4px;
+    /*box-shadow: inset 0px 0px 8px #000000;*/
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .25);
+}
+
+#login-form label, #rsql-form label {
+	display: inline !important;
+}
+
+#login-form input[type="text"], #login-form input[type="password"], #rsql-form input[type="text"], #rsql-form input[type="password"] {
+	display: inline !important;
+	width: 70%;
+	margin-left: 20px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.errors {
+    position: relative;
+    top: 15px;
+}
+
+ul.db-errors  {
+    padding-left: 12px;
+}
+
+ul.db-errors li {
+    color: rgb(169, 68, 66);
+}
+
+#btn-rsql {
+    position: relative;
+    left: -32px;   
+}
+
+.rsql-form-btn-li-skip {
+    position: relative;
+    left: 307px;
+}
+
+.main-nav {
+    background-color: rgb(251, 251, 251);
+    border-radius: 0px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0px 0px 2px #999;
+    margin-bottom: 0px;
+}
+
+.navbar span {
+    position: relative;
+    left: -5px;
+    top: 2px;
+}
+
+.navbar-right-user {
+    margin-right: 50px;
+}
+
+#features-list li {
+    list-style-type: circle;
+    font-size: 16px;
+}
+
+.brand-intro {
+    padding-top: 15px;
+    background-color: #FFF;
+    padding-bottom: 0;
+    /*border-bottom: 1px solid #D4D4D4;*/
+}
+
+#main-content article {
+    position: relative;
+    left: 20px;
+}
+
+#main-content {
+    /*width: 1225px;
+    margin: auto;*/
+    position: relative;
+    top: -50px;
+}
+
+.nav-respon span {
+    position: relative !important;
+    left: 0px !important;
+    top: 0px;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #777 !important;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #000 !important; 
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #888;
+    background-color: rgb(255, 255, 255) !important;
+}
+
+#main-content p {
+    font-size: 16px;
+}
+
+.query-form {
+    position: relative;
+    top: 15px;
+}
+
+input#query-submit {
+    position: relative;
+    top: 15px;
+    left: -15px;
+}
+
+.query-con {
+    padding-top: 15px;
+}
+
+.query-con h1 {
+    /*border-bottom: 1px solid black;
+    display: table-cell;
+    padding-bottom: 10px;*/
+}   
+
+.activityListHeading {
+    background-color: rgb(51, 51, 51) !important;
+    color: white !important;
+    border-radius: 3px;
+}
+
+.activityListTitle a {
+    text-decoration: none;
+}
+
+.activityListTitle a:hover {
+    text-decoration: none;
+}
+
+.activeMan a span {
+    color: #000 !important;
+}
+
+.homePanel, .securityPanel, .dbconPanel {
+    border-top: 0px ;
+}
+
+.homeHead h1, .securityPanel h1, .condbHead h1 {
+    font-size: 40px;
+}
+
+.homeHead h1 small, .securityPanel h1 small, .condbHead h1 small {
+    font-size: 40px;
+    color: inherit;
+}
+
+.userProImg img {
+    background-color: #BDBDBD;
+    /*height: 185px;*/
+    border: 1px solid #929292;
+    box-shadow: 0px 0px 9px #333;
+}
+
+.userProInfoInner label {
+    font-size: 1.9em;
+    font-weight: 400;
+    font-family: monospace !important;
+}
+
+.userProInfoInner p {
+    position: relative;
+    left: 45px;
+}
+
+.homePanel, .securityPanel, .dbconPanel {
+    min-height: 465px;
+}
+
+.securityBody label {
+    font-size: 1.9em;
+    font-weight: bold;
+    font-family: monospace !important;
+}
+
+.secutrityInfo p {
+    font-family: monospace !important;
+    font-size: 14px;
+}
+
+#btn-register {
+    position: relative;
+    left: -16px;
+}
+
+.query-result-txt {
+    font-family: consolas !important;
+    font-weight: 700;
+    font-size: 26px;
+    border-bottom: 1px solid #D05158;
+    padding-bottom: 5px;
+    color: rgb(205, 81, 88);
+}
+
+.query-result-con {
+    padding: 0px 35px 10px 40px;
+    margin: 40px 0px 0px 125px;
+    border: 1px solid #9d9d9d;
+    border-radius: 3px;
+    width: 920px;
+}
+
+table th {
+    font-family: consolas;
+    font-size: 20px;
+    /*text-align: center;*/
+}
+
+table td {
+    /*text-align: center;*/
+}
+
+textarea {
+    font-family: consolas;
+}
+
+.query-result-des {
+    font-size: 17px !important;
+    font-family: consolas !important;
+    margin-bottom: 0px !important;
+}
+
+.actual-query, .query-err {
+    margin-bottom: 15px !important;   
+}
+
+.query-result-des span {
+    font-family: consolas !important;
+    font-weight: bold;
+    color: #337AB7;
+}
+
+.query-result-bot-con {
+    padding: 15px 35px 0px 40px;
+    margin: 40px 0px 0px 125px;
+    border: 1px solid #CCC;
+    border-left-width: 5px;
+    border-radius: 3px;
+    border-left-color: #337ab7;
+    width: 920px;
+}
+
+.alert-bor-red {
+    border-left-color: #a94442;
+}
+
+.db_li {
+    text-transform: uppercase;
+    line-height: 52px;
+    color: #31708f !important;
+    font-family: aller !important;
+    font-weight: 600;
+    font-size: 24px;
+    cursor: context-menu;
+}
+
+.db_con_list {
+    color: #777777;
+    font-size: 17px;
+    text-transform: uppercase;
+    background-color: white;
+    font-family: aller, consolas, monaco !important;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 0px 0px 6px 6px !important;
+    box-shadow: 1px 1px 9px #E0E0E0;
+    border: 1px solid #E0E0E0;
+}
+
+.db_con_list span {
+    font-weight: normal;
+    margin-left: 15px;
+}
