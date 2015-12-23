@@ -89,10 +89,19 @@ class Rsql extends CI_Controller {
 			$db = $this->remote_database->connectDatabase( $slug );
 			$result = $db->query( $query );
 
+			if (strpos($query,'USE') !== false) {
+				$this->session->set_flashdata("use_not_allowed", "USE query is't allowed here. If you want to connect with other database cilck here <a href='http://localhost/remote-sql-master/rsql/con_db'>Connect DB</a>.");
+				redirect('/rsql/query');
+			}
+
 			if (strpos($query,'SELECT') !== false) {
-				$data['query_result'] = $result->result_array();
-				$data['fields_name'] = $result->list_fields();
-				$data['num_rows'] = $result->num_rows();
+				if ($db->error()['code'] AND $db->error()['message']) {
+					$data['query_error'] = $db->error();
+				} else {
+					$data['query_result'] = $result->result_array();
+					$data['fields_name'] = $result->list_fields();
+					$data['num_rows'] = $result->num_rows();
+				}
 			}
 
 			if (strpos($query,'INSERT') !== false OR strpos($query,'UPDATE') !== false OR strpos($query,'DELETE') !== false) {

@@ -87,5 +87,20 @@
 		    },
 		    stack: false
 		});
+	};
+	var use_not_allowed = "<?php echo $this->session->flashdata('use_not_allowed'); ?>";
+	if (use_not_allowed) {
+		$.toast({
+			heading: 'Query Error:',
+		    text: use_not_allowed,
+		    showHideTransition: 'slide',
+		    icon: 'error',
+		    position: {
+		        left: 600,
+		        top: 120
+		    },
+		    stack: false, 
+		    hideAfter: 5000
+		});
 	};  
 </script>
