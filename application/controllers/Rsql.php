@@ -104,7 +104,28 @@ class Rsql extends CI_Controller {
 				}
 			}
 
-			if (strpos($query,'INSERT') !== false OR strpos($query,'UPDATE') !== false OR strpos($query,'DELETE') !== false) {
+			if (strpos($query,'DROP') !== false) {
+				if ($db->error()['code'] AND $db->error()['message']) {
+					$data['query_error'] = $db->error();
+				} else {
+					$data['query_result'] = $result->result_array();
+					$data['fields_name'] = $result->list_fields();
+					$data['num_rows'] = $result->num_rows();
+				}
+			}
+
+			if (strpos($query,'INSERT') !== false OR strpos($query,'UPDATE') !== false OR strpos($query,'DELETE') !== false OR strpos($query,'ALTER') !== false) {
+				if ($db->error()['code'] AND $db->error()['message']) {
+					$data['query_error'] = $db->error();
+				} else {
+					$data['affected_rows'] = $db->affected_rows();
+					$data['query_duration'] = $db->query_times[0];
+					$data['query_count'] = $db->query_count;
+					$data['query'] = $db->queries[0];
+				}
+			}
+
+			if (strpos($query,'CREATE') !== false) {
 				if ($db->error()['code'] AND $db->error()['message']) {
 					$data['query_error'] = $db->error();
 				} else {
