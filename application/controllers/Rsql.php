@@ -7,6 +7,7 @@ class Rsql extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
+		$this->load->dbutil();
 		$this->load->model('remote_database');
 	}
 
@@ -130,12 +131,17 @@ class Rsql extends CI_Controller {
 			$input = $this->input->post();
 			$userId = $this->session->userdata('user_id');
 
-			$slug = $this->remote_database->saveDatabaseInfo( $input, $userId );
+			$db_exist = $this->dbutil->database_exists($input['dbname']);
+			if ($db_exist === true) {
+				$slug = $this->remote_database->saveDatabaseInfo( $input, $userId );
+				$this->session->set_userdata('db_slug', $slug);
+				$this->session->set_userdata('current_db', $input['dbname']);
 
-			$this->session->set_userdata('db_slug', $slug);
-			$this->session->set_userdata('current_db', $input['dbname']);
-
-			redirect('/rsql/query');			
+				redirect('/rsql/query');			
+			} else {
+				$this->session->set_flashdata("db_not_found", "Database not Found on server.");
+				redirect('/rsql/db_setting');
+			}
 		}
 	}
 

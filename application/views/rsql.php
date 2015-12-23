@@ -10,29 +10,16 @@
 		</div>
 	</div>
 <?php endif ?>
-<script>
-	var myError = "<?php echo $this->session->flashdata('disconnected_success'); ?>";
-	if (myError) {
-		$.toast({
-		    heading: 'DB Connection:',
-		    text: myError,
-		    hideAfter: 4000,
-		    icon: 'success'
-		});
-	};	 
-</script>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="jumbotron brand-intro query-con">
 			<div class="container">
-				<div role="tabpanel">
-				    
+				<div role="tabpanel">		    
 				    <ul class="nav nav-tabs" role="tablist">
 				        <li role="presentation" class="active">
 				            <a href="#condb" aria-controls="condb" role="tab" data-toggle="tab">DB Connection</a>
 				        </li>
 				    </ul>
-				
 				    <div class="tab-content">
 				        <div role="tabpanel" class="tab-pane active" id="condb">
 				        	<div class="panel panel-default dbconPanel">
@@ -124,3 +111,33 @@
 		</div>
 	</div>
 </div>
+<script>
+	var dbDisconnected = "<?php echo $this->session->flashdata('disconnected_success'); ?>";
+	if (dbDisconnected) {
+		$.toast({
+		    heading: 'DB Connection:',
+		    text: dbDisconnected,
+		    hideAfter: 4000,
+		    icon: 'success',
+		    position: {
+		        left: 600,
+		        top: 120
+		    },
+		    stack: false
+		});
+	};	
+	var dbNotFound = "<?php echo $this->session->flashdata('db_not_found'); ?>";
+	if (dbNotFound) {
+		$.toast({
+		    heading: 'DB Connection:',
+		    text: dbNotFound,
+		    showHideTransition: 'fade',
+		    icon: 'error',
+		    position: {
+		        left: 600,
+		        top: 120
+		    },
+		    stack: false
+		});
+	};  
+</script>
