@@ -7,7 +7,9 @@
 		<title>Remote SQL</title>
 		<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
+		<link href="<?php echo base_url(); ?>assets/css/jquery.toast.css" rel="stylesheet">
 		<script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+		<script src="<?php echo base_url(); ?>assets/js/jquery.toast.js"></script>
 	</head>
 	<body>
 		<?php if ($this->session->flashdata('already_loggedIn')): ?>
@@ -68,3 +70,11 @@
 				</div>
 			</div>
 		<?php endif ?>
+
+<script>
+	var curren_db = "<?php echo $this->session->userdata('current_db'); ?>",
+		db_slug	  = "<?php echo $this->session->userdata('db_slug'); ?>"
+	if (!curren_db && !db_slug ) {
+		$('.connected-db').html('No Connection');
+	};	
+</script>

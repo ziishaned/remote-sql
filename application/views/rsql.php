@@ -10,7 +10,17 @@
 		</div>
 	</div>
 <?php endif ?>
-<?php //echo $this->session->flashdata('disconnected_success'); ?>
+<script>
+	var myError = "<?php echo $this->session->flashdata('disconnected_success'); ?>";
+	if (myError) {
+		$.toast({
+		    heading: 'DB Connection:',
+		    text: myError,
+		    hideAfter: 4000,
+		    icon: 'success'
+		});
+	};	 
+</script>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="jumbotron brand-intro query-con">
