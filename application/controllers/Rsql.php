@@ -139,6 +139,13 @@ class Rsql extends CI_Controller {
 		}
 	}
 
+	public function db_disconnect() {
+		$this->session->unset_userdata('db_slug');
+		$this->session->unset_userdata('current_db');
+		$this->session->set_flashdata('disconnected_success', 'You are successfully disconnected from database.');
+		redirect('rsql/con_db');
+	}
+
 }
 
 /* End of file rsql.php */

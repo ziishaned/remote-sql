@@ -60,8 +60,8 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<ul class="list-group" style="height: 48px; margin-bottom: 0px;">
-							<div class="col-xs-12 col-sm-5 col-sm-offset-4 col-md-3 col-md-offset-5 col-lg-3 col-lg-offset-5">
-								<li class="list-group-item db_con_list text-info">Connected Database: <span><?php echo $this->session->userdata('current_db'); ?></span></li>
+							<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-5 col-md-offset-4 col-lg-5 col-lg-offset-4">
+								<li class="list-group-item db_con_list text-info">Connected Database: <span class="connected-db"><?php echo $this->session->userdata('current_db'); ?></span></li>
 							</div>
 						</ul>
 					</div>				
