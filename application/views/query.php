@@ -1,3 +1,6 @@
+<style>
+	.highlight { background-color: yellow }
+</style>
 <?php if (validation_errors()): ?>
 	<div class="row errors">
 		<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-lg-4 col-lg-offset-4">
@@ -74,7 +77,33 @@
 	</div>
 </div>
 <script>
-	
+	var Query = {
+		config : {
+			'reserveWords'  : ['SELECT', 'WHERE', 'AS', 'INSERT', 'UPDATE', 'INTO', 'FROM', 'AND', '&&', 'OR', '||', '*', 'DISTINCT', 'INT', 'NOT', 'NULL', 'AUTO_INCREMENT', 'VARCHAR', 'TIMESTAMP', 'PRIMARY', 'KEY', 'COLLATE', 'ENGINE', 'AUTO_INCREMENT', ';', 'text'],
+			'queryArea'     : $('#textarea'),
+			'parent'  		: this	
+		},
+
+		init : function(config) {
+			config[parent] = this;
+			this.bindEvents();
+		}, 
+
+		bindEvents : function() {
+			// Query.config.queryArea.on('keydown', function() {
+			// 	var reserveWords = Query.config.reserveWords;
+			// 	var inputValue = Query.config.queryArea.val();
+			// 	if ($.reserveWords.contains(inputValue)) {
+			// 		console.log('ok');
+			// 	}
+			// });
+		}
+	};
+
+	Query.init({
+		'reserveWords' : ['SELETCT', 'WHERE', 'AS', 'INSERT', 'UPDATE', 'INTO', 'FROM', 'AND', '&&', 'OR', '||', '*', 'DISTINCT', 'INT', 'NOT', 'NULL', 'AUTO_INCREMENT', 'VARCHAR', 'TIMESTAMP', 'PRIMARY', 'KEY', 'COLLATE', 'ENGINE', 'AUTO_INCREMENT', ';', 'text'],
+		'queryArea'     : $('#textarea')				
+	});
 
 	var dbConnected = "<?php echo $this->session->flashdata('db_connected'); ?>";
 	if (dbConnected) {
