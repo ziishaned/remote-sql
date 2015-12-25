@@ -22,8 +22,9 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label typeQueryHere">Type Query Here:</label>
 								<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-									<textarea id="code" name="query" class="form-control textarea" rows="3" required="required"></textarea>
+									<textarea id="code" class="form-control textarea" rows="3"></textarea>
 								</div>
+								<input type="hidden" name="query" id="queryIns">
 							</div>
 							<?php $attribute = array('class' => 'btn btn-primary pull-right', 'id' => 'query-submit', 'value' => 'Run'); echo form_submit($attribute); ?>
 						<?php echo form_close(); ?>
@@ -142,4 +143,9 @@
 		    stack: false
 		});
 	}; 
+
+	$('#query-submit').on('click', function() {
+		var query = editor.getValue();
+		console.log($('#queryIns').val(query));
+	});
 </script>
