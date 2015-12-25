@@ -1,6 +1,3 @@
-<style>
-	.highlight { background-color: yellow }
-</style>
 <?php if (validation_errors()): ?>
 	<div class="row errors">
 		<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-lg-4 col-lg-offset-4">
@@ -23,9 +20,9 @@
 					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-lg-offset-1">
 						<?php $attribute = array('role' => 'form', 'class' => 'query-form'); echo form_open('rsql/run_query', $attribute); ?>			
 							<div class="form-group">
-								<label for="textarea" class="col-sm-2 control-label">Type Query Here:</label>
-								<div class="col-sm-12">
-									<?php $attribute = array('name' => 'query', 'id' => 'textarea', 'class' => 'form-control', 'rows' => '3', 'required' => 'required'); echo form_textarea($attribute); ?>
+								<label class="col-sm-2 control-label typeQueryHere">Type Query Here:</label>
+								<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+									<textarea id="code" name="query" class="form-control textarea" rows="3" required="required"></textarea>
 								</div>
 							</div>
 							<?php $attribute = array('class' => 'btn btn-primary pull-right', 'id' => 'query-submit', 'value' => 'Run'); echo form_submit($attribute); ?>
@@ -77,33 +74,30 @@
 	</div>
 </div>
 <script>
-	var Query = {
-		config : {
-			'reserveWords'  : ['SELECT', 'WHERE', 'AS', 'INSERT', 'UPDATE', 'INTO', 'FROM', 'AND', '&&', 'OR', '||', '*', 'DISTINCT', 'INT', 'NOT', 'NULL', 'AUTO_INCREMENT', 'VARCHAR', 'TIMESTAMP', 'PRIMARY', 'KEY', 'COLLATE', 'ENGINE', 'AUTO_INCREMENT', ';', 'text'],
-			'queryArea'     : $('#textarea'),
-			'parent'  		: this	
-		},
+	
+	window.onload = function() {
+        var mime = 'text/x-mariadb';
 
-		init : function(config) {
-			config[parent] = this;
-			this.bindEvents();
-		}, 
+        if (window.location.href.indexOf('mime=') > -1) {
+         	mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
+        }
 
-		bindEvents : function() {
-			// Query.config.queryArea.on('keydown', function() {
-			// 	var reserveWords = Query.config.reserveWords;
-			// 	var inputValue = Query.config.queryArea.val();
-			// 	if ($.reserveWords.contains(inputValue)) {
-			// 		console.log('ok');
-			// 	}
-			// });
-		}
-	};
-
-	Query.init({
-		'reserveWords' : ['SELETCT', 'WHERE', 'AS', 'INSERT', 'UPDATE', 'INTO', 'FROM', 'AND', '&&', 'OR', '||', '*', 'DISTINCT', 'INT', 'NOT', 'NULL', 'AUTO_INCREMENT', 'VARCHAR', 'TIMESTAMP', 'PRIMARY', 'KEY', 'COLLATE', 'ENGINE', 'AUTO_INCREMENT', ';', 'text'],
-		'queryArea'     : $('#textarea')				
-	});
+        window.editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+          	mode: mime,
+         	theme: "monokai",
+          	styleActiveLine: true,
+          	indentWithTabs: true,
+          	smartIndent: true,
+          	lineNumbers: true,
+          	matchBrackets : true,
+          	autofocus: true,
+          	extraKeys: {"Tab": "autocomplete"},
+          	hintOptions: {tables: {
+            	users: {name: null, score: null, birthDate: null},
+            	countries: {name: null, population: null, size: null}
+          	}}
+        });
+    };
 
 	var dbConnected = "<?php echo $this->session->flashdata('db_connected'); ?>";
 	if (dbConnected) {

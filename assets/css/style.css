@@ -332,3 +332,16 @@ p.db_con_info_txt {
 .condbBodyAlreadyConn {
     margin-top: 50px;
 }
+
+.cm-s-monokai {
+    font-family: consolas, monaco !important;
+    height: 145px !important;
+    border: 1px solid #8A8A8A;
+    box-shadow: 1px 1px 12px #999;
+    border-radius: 3px;
+    font-size: 23px;
+}
+
+.typeQueryHere {
+    font-size: 15px !important;
+}

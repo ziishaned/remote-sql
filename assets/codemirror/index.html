@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CodeMirror</title>
+  <meta charset="utf-8"/>
+
+  <link rel="stylesheet" href="lib/codemirror.css" />
+  <script src="lib/codemirror.js"></script>
+  <script src="mode/sql/sql.js"></script>
+  <link rel="stylesheet" href="addon/hint/show-hint.css" />
+  <script src="addon/hint/show-hint.js"></script>
+  <script src="addon/hint/sql-hint.js"></script>
+  <script src="addon/selection/active-line.js"></script>
+  <link rel="stylesheet" href="theme/monokai.css">
+</head>
+<body>
+
+    <textarea id="code" rows="20" cols="20">
+    select * from where this = done
+    </textarea>
+
+    <script>
+      window.onload = function() {
+        var mime = 'text/x-mariadb';
+        // get mime type
+        if (window.location.href.indexOf('mime=') > -1) {
+          mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
+        }
+        window.editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+          mode: mime,
+          theme: "monokai",
+          styleActiveLine: true,
+          indentWithTabs: true,
+          smartIndent: true,
+          lineNumbers: true,
+          matchBrackets : true,
+          autofocus: true,
+          extraKeys: {"Tab": "autocomplete"},
+          hintOptions: {tables: {
+            users: {name: null, score: null, birthDate: null},
+            countries: {name: null, population: null, size: null}
+          }}
+        });
+      };
+    </script>
+  
+</body>
+</html>
