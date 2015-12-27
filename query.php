@@ -30,47 +30,53 @@
 						<?php echo form_close(); ?>
 					</div>
 				</div>
-				<?php if (isset($result_sets)): ?>
-					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-lg-offset-1 query-result-con">
-							<div role="tabpanel">
-							    <ul class="nav nav-tabs" role="tablist">
-							    	<?php foreach ($result_sets as $key => $result): ?>
-							        	<li role="presentation" <?php if ($key == 0): ?> class="active" <?php endif ?>>
-							            	<a href="#_tab<?php echo $key ?>" aria-controls="_tab<?php echo $key ?>" role="tab" data-toggle="tab">Result # <?php echo $key+1 ?> (<?php echo $result['total_fields'].'x'.$result['num_rows']; ?>)</a>
-							        	</li>
-							        <?php endforeach; ?>
-							    </ul>
-							    <div class="tab-content">
-							    	<?php foreach ($result_sets as $key => $result): ?>
-							        	<div role="tabpanel" class="tab-pane <?php if ($key == 0): ?> active <?php endif ?>" id="_tab<?php echo $key ?>">
-							        		<table class="table">
-							        			<?php if (isset($result['fields_name']) AND isset($result['query_result'])): ?>
-													<thead>
-														<tr>
-															<?php foreach ($result['fields_name'] as $field_name): ?>
-																<th><?php echo $field_name; ?></th>
-															<?php endforeach ?>
-														</tr>
-													</thead>
-													<tbody>
-												    	<?php foreach ($result['query_result'] as $_result): ?>
-														    <?php echo '<tr>'; ?>
-														    	<?php foreach ($result['fields_name'] as $field_name): ?>
-														    		<?php echo '<td>' . $_result[$field_name] . '</td>'; ?>
-														    	<?php endforeach ?>
-												    		<?php echo '</tr>'; ?>
-												    	<?php endforeach ?>
-											    	</tbody>
-												<?php endif ?>
-											</table>
-							        	</div>
-							    	<?php endforeach; ?>
-							    </div>
+
+
+				<?php foreach ($result_sets as $result): ?>
+					
+					<?php if (isset($result['fields_name']) AND isset($result['query_result'])): ?>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-lg-offset-1 query-result-con">
+								<h3 class="query-result-txt">Query Result</h3>
+								<table class="table">
+								    <thead>
+										<tr>
+											<?php foreach ($result['fields_name'] as $field_name): ?>
+												<th><?php echo $field_name; ?></th>
+											<?php endforeach ?>
+										</tr>
+									</thead>
+								    <tbody>
+								    	<?php foreach ($result['query_result'] as $_result): ?>
+										    <?php echo '<tr>'; ?>
+										    	<?php foreach ($result['fields_name'] as $field_name): ?>
+										    		<?php echo '<td>' . $_result[$field_name] . '</td>'; ?>
+										    	<?php endforeach ?>
+								    		<?php echo '</tr>'; ?>
+								    	<?php endforeach ?>
+							    	</tbody>
+								</table>
 							</div>
 						</div>
-					</div>
-				<?php endif ?>
+					<?php endif ?>
+					<?php if (isset($result['query_count']) AND isset($result['query_duration']) AND isset($result['affected_rows'])): ?>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-lg-offset-1 query-result-bot-con">
+								<p class="query-result-des"><span>Affected rows:</span> <?php echo $result['affected_rows']; ?> <span>Duration for 1 query:</span> <?php echo round($result['query_duration'], 3) . ' sec'; ?> <span>For </span> <?php echo $result['query_count']; ?> <span>Queries</span>.</p>
+								<p class="query-result-des actual-query"><span>Query: </span><?php echo $result['query']; ?></p>
+							</div>
+						</div>
+					<?php endif ?>
+					<?php if (isset($result['query_error'])): ?>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-lg-offset-1 query-result-bot-con alert-bor-red">
+								<p class="query-result-des query-err"><?php echo 'SQL Error (' . $result['query_error']['code'] . '): ' . $result['query_error']['message']; ?></p>
+							</div>
+						</div>
+					<?php endif ?>
+
+				<?php endforeach ?>
+
 			</div>
 		</div>
 	</div>

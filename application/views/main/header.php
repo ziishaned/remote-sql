@@ -10,7 +10,8 @@
 		<link href="<?php echo base_url(); ?>assets/css/jquery.toast.css" rel="stylesheet">
 		<script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 		<script src="<?php echo base_url(); ?>assets/js/jquery.toast.js"></script>
-
+		
+		<!-- Codemirror -->
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/codemirror/lib/codemirror.css" />
 		<script src="<?php echo base_url(); ?>assets/codemirror/lib/codemirror.js"></script>
 		<script src="<?php echo base_url(); ?>assets/codemirror/mode/sql/sql.js"></script>
@@ -50,6 +51,7 @@
 							<ul class="nav navbar-nav">
 								<li <?php if ($cur_page === 'home'): ?>class="active activeMan"<?php endif ?>><a href="<?php echo base_url(); ?>user/dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
 								<li <?php if ($cur_page === 'query'): ?>class="active activeMan"<?php endif ?>><a href="<?php echo base_url(); ?>rsql/query"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>Query</a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>Query Builder</a></li>
 							</ul>
 							<ul class="nav navbar-nav navbar-right">
 								<!-- <li <?php //if ($cur_page === 'activity'): ?>class="active activeMan"<?php //endif ?>><a href="<?php echo base_url(); ?>user/activity"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> User Activity</a></li> -->

@@ -240,8 +240,8 @@ input#query-submit {
 .query-result-con {
     padding: 0px 35px 10px 40px;
     margin: 40px 0px 0px 125px;
-    border: 1px solid #9d9d9d;
-    border-radius: 3px;
+    /*border: 1px solid #9d9d9d;*/
+    /*border-radius: 3px;*/
     width: 920px;
 }
 
