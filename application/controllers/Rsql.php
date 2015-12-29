@@ -55,11 +55,7 @@ class Rsql extends CI_Controller {
 
 			$this->query = $this->input->post('query');
 
-			preg_match_all('/ USE /i', $this->query, $mathes);
-			var_dump($mathes);
-			die;
-
-			if (strchr($this->query, 'USE')) {
+			if (preg_match('/^USE|^use/', $this->query, $matches)) {
 				$this->session->set_flashdata("use_not_allowed", "USE query is't allowed here. If you want to connect with other database cilck here <a href='http://localhost/remote-sql-master/rsql/con_db'>Connect DB</a>.");
 				redirect('/rsql/query');
 			}
