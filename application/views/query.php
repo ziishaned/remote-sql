@@ -1,3 +1,26 @@
+<?php 
+	
+	function keyExist($keyName, $data) {
+		
+		$totalKeyName = count($keyName);
+		$n = 0;
+
+		foreach ($keyName as $value) {
+			if (array_key_exists($value, $data)) {
+				$n++;
+			}
+		}
+
+		if ($n === $totalKeyName) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+?>
+
 <?php if (validation_errors()): ?>
 	<div class="row errors">
 		<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-lg-4 col-lg-offset-4">
@@ -31,21 +54,32 @@
 					</div>
 				</div>
 				<?php if (isset($result_sets)): ?>
-					<div class="row">
+					<div class="row queryResultArea">
 						<div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-lg-offset-1 query-result-con">
 							<div role="tabpanel">
 							    <ul class="nav nav-tabs" role="tablist">
 							    	<?php foreach ($result_sets as $key => $result): ?>
-							        	<li role="presentation" <?php if ($key == 0): ?> class="active" <?php endif ?>>
-							            	<a href="#_tab<?php echo $key ?>" aria-controls="_tab<?php echo $key ?>" role="tab" data-toggle="tab">Result # <?php echo $key+1 ?> (<?php echo $result['total_fields'].'x'.$result['num_rows']; ?>)</a>
-							        	</li>
+							    		<?php if (keyExist(['total_fields', 'num_rows'], $result)) { ?>	
+								        	<li role="presentation" <?php if ($key == 0): ?> class="active" <?php endif ?>>
+								            	<a href="#_tab<?php echo $key ?>" aria-controls="_tab<?php echo $key ?>" role="tab" data-toggle="tab">Result # <?php echo $key+1 ?> (<?php echo $result['total_fields'].'x'.$result['num_rows']; ?>)</a>
+								        	</li>
+							        	<?php } ?>
 							        <?php endforeach; ?>
 							    </ul>
-							    <div class="tab-content">
+							    <div class="tab-content tab-bor">
 							    	<?php foreach ($result_sets as $key => $result): ?>
 							        	<div role="tabpanel" class="tab-pane <?php if ($key == 0): ?> active <?php endif ?>" id="_tab<?php echo $key ?>">
-							        		<table class="table">
-							        			<?php if (isset($result['fields_name']) AND isset($result['query_result'])): ?>
+									    	<div class="query_result_info">
+									    		<?php if (keyExist(['num_rows', 'warnings', 'query_times'], $result)): ?>
+										    		<p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Affected rows: 0  Found rows: <?php echo $result['num_rows']; ?>  Warnings: <?php echo $result['warnings'] ?>  Duration for query: <?php echo round($result['query_times'], 3); ?> sec.</p>
+									    		<?php endif; ?>
+									    		<?php if (keyExist(['query_error'], $result)): ?>
+													<p class="query-result-des query-err"><?php echo 'SQL Error (' . $result['query_error']['code'] . '): ' . $result['query_error']['message']; ?></p>
+									    		<?php endif ?>
+									    		<p><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span><span id="sqlQuery" class="cm-s-default"><?php echo $result['query']; ?></span></p>
+									    	</div>
+									    	<?php if (keyExist(['fields_name', 'query_result'], $result)): ?>
+								        		<table class="table">
 													<thead>
 														<tr>
 															<?php foreach ($result['fields_name'] as $field_name): ?>
@@ -62,8 +96,8 @@
 												    		<?php echo '</tr>'; ?>
 												    	<?php endforeach ?>
 											    	</tbody>
-												<?php endif ?>
-											</table>
+												</table>
+									    	<?php endif ?>
 							        	</div>
 							    	<?php endforeach; ?>
 							    </div>
@@ -76,7 +110,12 @@
 	</div>
 </div>
 <script>
-	
+	(function() {
+		if ($("#sqlQuery").length > 0) {
+			CodeMirror.runMode($("#sqlQuery").text(), "text/x-mariadb", $("#sqlQuery")[0]);
+		}
+	})();
+
 	window.onload = function() {
         var mime = 'text/x-mariadb';
 

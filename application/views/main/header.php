@@ -19,6 +19,7 @@
 		<script src="<?php echo base_url(); ?>assets/codemirror/addon/hint/show-hint.js"></script>
 		<script src="<?php echo base_url(); ?>assets/codemirror/addon/hint/sql-hint.js"></script>
 		<script src="<?php echo base_url(); ?>assets/codemirror/addon/selection/active-line.js"></script>
+		<script src="<?php echo base_url(); ?>assets/codemirror/addon/runmode/runmode.js"></script>
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/codemirror/theme/monokai.css">		
 	</head>
 	<body>
