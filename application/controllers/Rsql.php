@@ -55,7 +55,7 @@ class Rsql extends CI_Controller {
 
 			$this->query = $this->input->post('query');
 
-			if (preg_match('/^USE|^use/', $this->query, $matches)) {
+			if (preg_match('/^USE|^use/', $this->query)) {
 				$this->session->set_flashdata("use_not_allowed", "USE query is't allowed here. If you want to connect with other database cilck here <a href='http://localhost/remote-sql-master/rsql/con_db'>Connect DB</a>.");
 				redirect('/rsql/query');
 			}
@@ -84,11 +84,17 @@ class Rsql extends CI_Controller {
 
 	public function parseResult() {
 
+		// Alternative to preg_match()
+		// strpos(strtolower($this->query),'select') !== false
+
 		$data = [];
 
 		$data['query'] = $this->query;
-		if (strpos(strtolower($this->query),'select') !== false) {
+
+		if (preg_match('/^SELECT|^select/', $this->query) == 1) {
 			if ($this->db->error()['code'] AND $this->db->error()['message']) {
+				$data['total_fields'] = 0;
+				$data['num_rows'] = 0;
 				$data['query_error'] = $this->db->error();
 			} else {
 				$data['query_result'] = $this->result->result_array();
@@ -100,8 +106,10 @@ class Rsql extends CI_Controller {
 			}
 		}
 
-		if (strpos(strtolower($this->query),'drop') !== false) {
+		if (preg_match('/^DROP|^drop/', $this->query) == 1) {
 			if ($this->db->error()['code'] AND $this->db->error()['message']) {
+				$data['total_fields'] = 0;
+				$data['num_rows'] = 0;
 				$data['query_error'] = $this->db->error();
 			} else {
 				$query = explode(" ", $this->query);
@@ -124,8 +132,10 @@ class Rsql extends CI_Controller {
 			}
 		}
 
-		if (strpos(strtolower($this->query),'rename') !== false OR strpos(strtolower($this->query),'insert') !== false OR strpos(strtolower($this->query),'update') !== false OR strpos(strtolower($this->query),'delete') !== false OR strpos(strtolower($this->query),'alter') !== false) {
+		if (preg_match('/^RENAME|^rename/', $this->query) == 1 OR preg_match('/^INSERT|^insert/', $this->query) == 1 OR preg_match('/^UPDATE|^update/', $this->query) == 1 OR preg_match('/^DELETE|^delete/', $this->query) == 1 OR preg_match('/^ALTER|^alter/', $this->query) == 1) {
 			if ($this->db->error()['code'] AND $this->db->error()['message']) {
+				$data['total_fields'] = 0;
+				$data['num_rows'] = 0;
 				$data['query_error'] = $this->db->error();
 			} else {
 				$data['fields_name'] = 0;
@@ -139,8 +149,10 @@ class Rsql extends CI_Controller {
 			}
 		}
 		
-		if (strpos(strtolower($this->query),'create') !== false) {
+		if (preg_match('/^CREATE|^create/', $this->query) == 1) {
 			if ($this->db->error()['code'] AND $this->db->error()['message']) {
+				$data['total_fields'] = 0;
+				$data['num_rows'] = 0;
 				$data['query_error'] = $this->db->error();
 			} else {	
 				$data['fields_name'] = 0;
@@ -154,8 +166,10 @@ class Rsql extends CI_Controller {
 			}
 		}
 
-		if (strpos(strtolower($this->query),'show') !== false) {
+		if (preg_match('/^SHOW|^show/', $this->query) == 1) {
 			if ($this->db->error()['code'] AND $this->db->error()['message']) {
+				$data['total_fields'] = 0;
+				$data['num_rows'] = 0;
 				$data['query_error'] = $this->db->error();
 			} else {
 				$data['affected_rows'] = 0;
@@ -171,6 +185,8 @@ class Rsql extends CI_Controller {
 		
 		
 		if ($this->db->error()['code'] AND $this->db->error()['message']) {
+			$data['total_fields'] = 0;
+			$data['num_rows'] = 0;
 			$data['query_error'] = $this->db->error();
 		}
 

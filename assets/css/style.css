@@ -375,3 +375,7 @@ p.db_con_info_txt {
     font-size: 18px;
     color: #333333;
 }
+
+.query-err {
+    color: #a94442 !important;
+}

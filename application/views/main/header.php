@@ -52,10 +52,10 @@
 							<ul class="nav navbar-nav">
 								<li <?php if ($cur_page === 'home'): ?>class="active activeMan"<?php endif ?>><a href="<?php echo base_url(); ?>user/dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
 								<li <?php if ($cur_page === 'query'): ?>class="active activeMan"<?php endif ?>><a href="<?php echo base_url(); ?>rsql/query"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>Query</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>Query Builder</a></li>
+								<!-- <li><a href="#"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>Query Builder</a></li> -->
 							</ul>
 							<ul class="nav navbar-nav navbar-right">
-								<!-- <li <?php //if ($cur_page === 'activity'): ?>class="active activeMan"<?php //endif ?>><a href="<?php echo base_url(); ?>user/activity"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> User Activity</a></li> -->
+								<!-- <li <?php //if ($cur_page === 'activity'): ?>class="active activeMan"<?php //endif ?>><a href="<?php //echo base_url(); ?>user/activity"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> User Activity</a></li> -->
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Setting <b class="caret"></b></a>
 									<ul class="dropdown-menu">
