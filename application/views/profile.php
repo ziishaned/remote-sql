@@ -1,3 +1,28 @@
+<?php 
+
+	function humanTiming ($time) {
+
+		$time = time() - $time; // to get the time since that moment
+		$time = ($time<1)? 1 : $time;
+		$tokens = array (
+		    31536000 => 'year',
+		    2592000 => 'month',
+		    604800 => 'week',
+		    86400 => 'day',
+		    3600 => 'hour',
+		    60 => 'minute',
+		    1 => 'second'
+		);
+
+		foreach ($tokens as $unit => $text) {
+		    if ($time < $unit) continue;
+		    $numberOfUnits = floor($time / $unit);
+		    return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+		}
+
+	}
+
+?>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="jumbotron brand-intro query-con">
@@ -26,7 +51,7 @@
 					        		   			<div class="row">
 					        		   				<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-0 col-md-3 col-md-offset-0 col-lg-3 col-lg-offset-0">
 							        		   			<div class="userProImg">
-								        		   			<img src="<?php echo base_url(); ?>assets/img/user-img.jpg" class="text-center img-responsive img-rounded" alt="Image">
+								        		   			<img src="<?php echo base_url(); ?>assets/img/user-img.png" class="text-center img-responsive img-rounded" alt="Image">
 							        		   			</div>
 					        		   				</div>
 					        		   				<div class="col-xs-1 col-xs-offset-1 col-sm-5 col-md-5 col-lg-7 col-lg-offset-1">
@@ -38,11 +63,11 @@
 																</div>
 																<div class="form-group">
 																	<label>Email:</label>
-																	<p><?php echo $user_data->email; ?></p>
+																	<p style="text-transform: lowercase;"><?php echo $user_data->email; ?></p>
 																</div>
 																<div class="form-group">
 																	<label>Joined Since:</label>
-																	<p><?php echo $user_data->joined_date; ?></p>
+																	<p><?php echo humanTiming(strtotime($user_data->joined_date)) . ' ago'; ?></p>
 																</div>
 															</div>
 							        		   			</div>
@@ -73,7 +98,7 @@
 						        		   						<p>If you want to change Username and Password just fill the below form and submit it. Or Leave it as it is if you don't want to change username and Password.</p>
 						        		   				 	</div>
 							        		   			</div>
-							        		   			<?php $attribute = array('role' => 'form'); echo form_open('user/change_security', $attribute); ?>
+							        		   			<?php $attribute = array('role' => 'form', 'id' => 'changeSecurity'); echo form_open('user/change_security', $attribute); ?>
 							        		   				<div class="form-group">
 							        		   					<label for="username">Username:</label>
 							        		   					<?php $attribute = array('name' => 'username', 'class' => 'form-control', 'id' => 'username', 'value' => "$user_data->username", 'required' => 'required'); echo form_input($attribute); ?>
@@ -86,7 +111,7 @@
 							        		   					<label for="re-password">Re-Type Password:</label>
 							        		   					<?php $attribute = array('name' => 're-password', 'class' => 'form-control', 'id' => 're-password', 'value' => "$user_data->password", 'required' => 'required'); echo form_password($attribute); ?>
 							        		   				</div>
-							        		   				<?php $attribute = array('class' => 'btn btn-primary pull-right', 'value' => 'Save Settings'); echo form_input($attribute); ?>
+							        		   				<?php $attribute = array('class' => 'btn btn-primary pull-right', 'value' => 'Save Settings', 'id' => 'submit'); echo form_submit($attribute); ?>
 							        		   			<?php echo form_close(); ?>
 					        		   				</div>
 					        		   			</div>
@@ -102,3 +127,90 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	var toast = ($.toast);
+		
+	$('#submit').on('click', function(event) {
+		event.preventDefault();
+
+		var errors = [];
+		var username = $('input#username').val();
+		var password = $('input#password').val();
+		var repassword = $('input#re-password').val();
+
+
+		if (username == null || username == "") {
+			errors.push('The Username field is required.');
+		}
+
+		if (username != null && username != "") {
+			if (username.length < 3) {
+				errors.push('The Username must be greater than 3 characters.');
+			}
+
+			if (username.length > 20) {
+				errors.push('The Username must be less than 20 characters.');
+			}
+		}
+		
+		if (password == null || password == "") {
+			errors.push('The Password field is required.');
+		}
+
+		if (password != null && password != "") {
+			if (password.length < 6) {
+				errors.push('The Password must be greater than 6 characters.');
+			}
+
+			if (password.length > 20) {
+				errors.push('The Password must be less than 20 characters.');
+			}
+		}
+
+		if (repassword == null || repassword == "") {
+			errors.push('The Re-Type Password field is required.');
+		}
+
+		if (password != null && password != "" && repassword != null && repassword != "") {
+			if (password != repassword) {
+				errors.push('The Re-Type Password and Password not matched.');
+			};
+		}
+
+		if (errors.length != 0) {
+			toast({
+				heading: 'Query Error:',
+			    text: errors,
+			    showHideTransition: 'fade',
+			    icon: 'error',
+			    position: {
+			        left: 600,
+			        top: 120
+			    },
+			    stack: false, 
+			    hideAfter: 9000
+			});
+		} else {
+			$.ajax({
+				url: '',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					param1: 'value1'
+				},
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+		}
+	});
+
+</script>

@@ -3,6 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
 
+
+	public function change_security() {
+		// $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[3]|max_length[12]');
+		// $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[3]|max_length[12]');
+		// $this->form_validation->set_rules('re-password', 'Re-Type Password', 'trim|matches[password]|required|min_length[3]|max_length[12]');
+		
+		// if ($this->form_validation->run() == FALSE) {
+		// 	redirect('user/profile');	
+		// } else {
+		// 	echo "ok";
+		// }		
+	}
+
 	public function login() {
 		if($this->session->userdata('logged_in') === TRUE) {
 			$data['cur_page'] = 'home';

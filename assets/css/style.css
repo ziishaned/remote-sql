@@ -170,7 +170,7 @@ input#query-submit {
 
 .activityListTitle a:hover {
     text-decoration: none;
-}
+} 
 
 .activeMan a span {
     color: #000 !important;
@@ -193,7 +193,7 @@ input#query-submit {
     background-color: #BDBDBD;
     /*height: 185px;*/
     border: 1px solid #929292;
-    box-shadow: 0px 0px 9px #333;
+    box-shadow: 0px 2px 10px #333;
 }
 
 .userProInfoInner label {
@@ -205,6 +205,7 @@ input#query-submit {
 .userProInfoInner p {
     position: relative;
     left: 45px;
+    text-transform: capitalize;
 }
 
 .homePanel, .securityPanel, .dbconPanel {
@@ -378,4 +379,8 @@ p.db_con_info_txt {
 
 .query-err {
     color: #a94442 !important;
+}
+
+nav a.navbar-brand {
+    color: #000 !important;
 }
