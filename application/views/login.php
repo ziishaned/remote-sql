@@ -1,14 +1,19 @@
 <?php if (validation_errors()): ?>
-	<div class="row errors">
-		<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-lg-4 col-lg-offset-4">
-			<div class="alert alert-danger">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				<ul>
-					<?php echo validation_errors('<li>'); ?>
-				</ul>
-			</div>
-		</div>
-	</div>
+	<script>
+		var validation_errors = <?php echo json_encode(validation_errors()); ?>;
+		$.toast({
+			heading: 'Login Error:',
+		    text: validation_errors,
+		    showHideTransition: 'fade',
+		    icon: 'error',
+		    position: {
+		        left: 490,
+		        top: 90
+		    },
+		    stack: false, 
+		    hideAfter: 9000
+		});
+	</script>
 <?php endif ?>
 <div class="row" id="login-form">
 	<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-lg-4 col-lg-offset-4">
@@ -33,3 +38,20 @@
 		<?php echo form_close(); ?>
 	</div>	
 </div>
+<script>
+	var login_failed = "<?php echo $this->session->flashdata('login_failed'); ?>";
+	if (login_failed) {
+		$.toast({
+			heading: 'Login Failed:',
+		    text: login_failed,
+		    showHideTransition: 'fade',
+		    icon: 'error',
+		    position: {
+		        left: 485,
+		        top: 110
+		    },
+		    stack: false, 
+		    hideAfter: 9000
+		});
+	};
+</script>

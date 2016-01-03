@@ -1,14 +1,19 @@
 <?php if (validation_errors()): ?>
-	<div class="row errors">
-		<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-lg-4 col-lg-offset-4">
-			<div class="alert alert-danger">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				<ul class="db-errors">
-					<?php echo validation_errors('<li>'); ?>
-				</ul>
-			</div>
-		</div>
-	</div>
+	<script>
+		var validation_errors = <?php echo json_encode(validation_errors()); ?>;
+		$.toast({
+			heading: 'DB Connection Error:',
+		    text: validation_errors,
+		    showHideTransition: 'fade',
+		    icon: 'error',
+		    position: {
+		        left: 490,
+		        top: 176
+		    },
+		    stack: false, 
+		    hideAfter: 9000
+		});
+	</script>
 <?php endif ?>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -120,8 +125,8 @@
 		    hideAfter: 4000,
 		    icon: 'success',
 		    position: {
-		        left: 600,
-		        top: 120
+		        left: 490,
+		        top: 176
 		    },
 		    stack: false
 		});
@@ -134,8 +139,8 @@
 		    showHideTransition: 'fade',
 		    icon: 'error',
 		    position: {
-		        left: 600,
-		        top: 120
+		        left: 490,
+		        top: 176
 		    },
 		    stack: false
 		});
@@ -148,8 +153,8 @@
 		    showHideTransition: 'fade',
 		    icon: 'success',
 		    position: {
-		        left: 600,
-		        top: 120
+		        left: 490,
+		        top: 176
 		    },
 		    stack: false
 		});

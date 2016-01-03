@@ -2,7 +2,7 @@
  * jQuery toast plugin created by Kamran Ahmed copyright MIT license 2014
  * v0.1
  */
-.jq-toast-wrap { display: block; position: fixed; width: 350px;  pointer-events: none !important; margin: 0; padding: 0; letter-spacing: normal; z-index: 2; }
+.jq-toast-wrap { width: 370px; display: block; position: fixed; pointer-events: none !important; margin: 0; padding: 0; letter-spacing: normal; z-index: 2; }
 .jq-toast-wrap * { margin: 0; padding: 0; }
 
 .jq-toast-wrap.bottom-left { bottom: 20px; left: 20px; }
@@ -12,11 +12,12 @@
 
 .jq-toast-single { display: block; width: 100%; padding: 10px; margin: 0px 0px 5px; border-radius: 4px; font-size: 12px; font-family: arial, sans-serif; line-height: 17px; position: relative;  pointer-events: all !important; background-color: #444444; color: white; }
 
-.jq-toast-single h2 { font-family: arial, sans-serif; font-size: 14px; margin: 0px 0px 7px; background: none; color: inherit; line-height: inherit; letter-spacing: normal; }
+.jq-toast-single h2 { font-family: arial, sans-serif; font-size: 19px; margin: 0px 0px 7px; background: none; color: inherit; line-height: inherit; letter-spacing: normal; }
 .jq-toast-single a { color: #eee; text-decoration: none; font-weight: bold; border-bottom: 1px solid white; padding-bottom: 3px; font-size: 12px; }
 
 .jq-toast-single ul { margin: 0px 0px 0px 2px; background: none; padding:0px; }
 .jq-toast-single ul li { list-style-type: none !important; line-height: 17px; background: none; margin: 0; padding: 0; letter-spacing: normal; color: #fff !important;}
+.jq-toast-single p { color: #fff;}
 
 .close-jq-toast-single { position: absolute; top: 3px; right: 7px; font-size: 14px; cursor: pointer; }
 

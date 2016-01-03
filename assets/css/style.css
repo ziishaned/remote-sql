@@ -134,7 +134,9 @@ ul.db-errors li {
 }
 
 #main-content p {
+    color: #333 !important;
     font-size: 16px;
+    line-height: 26px;
 }
 
 .query-form {
@@ -203,6 +205,7 @@ input#query-submit {
 }
 
 .userProInfoInner p {
+    color: #333 !important;
     position: relative;
     left: 45px;
     text-transform: capitalize;
@@ -221,6 +224,7 @@ input#query-submit {
 .secutrityInfo p {
     font-family: monospace, sans-serif !important;
     font-size: 14px;
+    color: #333 !important;
 }
 
 #btn-register {

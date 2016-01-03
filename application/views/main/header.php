@@ -27,16 +27,6 @@
 		<?php if ($this->session->flashdata('already_loggedIn')): ?>
 			<?php echo $this->session->flashdata('already_loggedIn'); ?>
 		<?php endif; ?>
-		<?php if ($this->session->flashdata('login_failed')): ?>
-			<div class="row errors">
-				<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-lg-4 col-lg-offset-4">
-					<div class="alert alert-danger">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						<?php echo $this->session->flashdata('login_failed'); ?>
-					</div>
-				</div>
-			</div>
-		<?php endif ?>
 		<?php if ($this->session->userdata('logged_in') === TRUE): ?>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

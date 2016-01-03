@@ -22,10 +22,14 @@ class Rsql extends CI_Controller {
 	}
 
 	public function con_db() {
-		$data['cur_page'] = 'condb';
-		$this->load->view('main/header', $data);
-		$this->load->view('rsql');
-		$this->load->view('main/footer');
+		if($this->session->userdata('logged_in') === TRUE) {
+			$data['cur_page'] = 'condb';
+			$this->load->view('main/header', $data);
+			$this->load->view('rsql');
+			$this->load->view('main/footer');
+		} else {
+			redirect('user/login');
+		}
 	}
 
 	public function query($data = NULL) {
@@ -83,114 +87,117 @@ class Rsql extends CI_Controller {
 	}
 
 	public function parseResult() {
+		if($this->session->userdata('logged_in') === TRUE) {
+			// Alternative to preg_match()
+			// strpos(strtolower($this->query),'select') !== false
 
-		// Alternative to preg_match()
-		// strpos(strtolower($this->query),'select') !== false
+			$data = [];
 
-		$data = [];
+			$data['query'] = $this->query;
 
-		$data['query'] = $this->query;
-
-		if (preg_match('/^SELECT|^select/', $this->query) == 1) {
-			if ($this->db->error()['code'] AND $this->db->error()['message']) {
-				$data['total_fields'] = 0;
-				$data['num_rows'] = 0;
-				$data['query_error'] = $this->db->error();
-			} else {
-				$data['query_result'] = $this->result->result_array();
-				$data['fields_name'] = $this->result->list_fields();
-				$data['total_fields'] = $this->result->conn_id->field_count;
-				$data['num_rows'] = $this->result->num_rows();
-				$data['warnings'] =	$this->result->conn_id->warning_count;
-				$data['query_times'] = $this->db->query_times[0];
+			if (preg_match('/^SELECT|^select/', $this->query) == 1) {
+				if ($this->db->error()['code'] AND $this->db->error()['message']) {
+					$data['total_fields'] = 0;
+					$data['num_rows'] = 0;
+					$data['query_error'] = $this->db->error();
+				} else {
+					$data['query_result'] = $this->result->result_array();
+					$data['fields_name'] = $this->result->list_fields();
+					$data['total_fields'] = $this->result->conn_id->field_count;
+					$data['num_rows'] = $this->result->num_rows();
+					$data['warnings'] =	$this->result->conn_id->warning_count;
+					$data['query_times'] = $this->db->query_times[0];
+				}
 			}
-		}
 
-		if (preg_match('/^DROP|^drop/', $this->query) == 1) {
-			if ($this->db->error()['code'] AND $this->db->error()['message']) {
-				$data['total_fields'] = 0;
-				$data['num_rows'] = 0;
-				$data['query_error'] = $this->db->error();
-			} else {
-				$query = explode(" ", $this->query);
-				$db = $query[2];
-				if ($this->session->userdata('current_db') === $db) {
-					$this->session->unset_userdata('db_slug');
-					$this->session->unset_userdata('current_db');
-					$this->session->set_flashdata('db_dropped', 'Database successfully dropped.');
-					redirect('/rsql/con_db');
+			if (preg_match('/^DROP|^drop/', $this->query) == 1) {
+				if ($this->db->error()['code'] AND $this->db->error()['message']) {
+					$data['total_fields'] = 0;
+					$data['num_rows'] = 0;
+					$data['query_error'] = $this->db->error();
+				} else {
+					$query = explode(" ", $this->query);
+					$db = $query[2];
+					if ($this->session->userdata('current_db') === $db) {
+						$this->session->unset_userdata('db_slug');
+						$this->session->unset_userdata('current_db');
+						$this->session->set_flashdata('db_dropped', 'Database successfully dropped.');
+						redirect('/rsql/con_db');
+					} else {
+						$data['fields_name'] = 0;
+						$data['total_fields'] = 0;
+						$data['affected_rows'] = $this->db->conn_id->affected_rows;
+						$data['num_rows'] = 0;
+						$data['warnings'] =	$this->db->conn_id->warning_count;
+						$data['query_times'] = $this->db->query_times[0];
+						$data['query_count'] = $this->db->query_count;
+						$data['query'] = $this->db->queries[0];
+					}
+				}
+			}
+
+			if (preg_match('/^RENAME|^rename/', $this->query) == 1 OR preg_match('/^INSERT|^insert/', $this->query) == 1 OR preg_match('/^UPDATE|^update/', $this->query) == 1 OR preg_match('/^DELETE|^delete/', $this->query) == 1 OR preg_match('/^ALTER|^alter/', $this->query) == 1) {
+				if ($this->db->error()['code'] AND $this->db->error()['message']) {
+					$data['total_fields'] = 0;
+					$data['num_rows'] = 0;
+					$data['query_error'] = $this->db->error();
 				} else {
 					$data['fields_name'] = 0;
 					$data['total_fields'] = 0;
-					$data['affected_rows'] = $this->db->conn_id->affected_rows;
-					$data['num_rows'] = 0;
-					$data['warnings'] =	$this->db->conn_id->warning_count;
+					$data['num_rows'] = 0; 
+					$data['warnings'] = $this->db->conn_id->warning_count; 
+					$data['affected_rows'] = 1;
 					$data['query_times'] = $this->db->query_times[0];
 					$data['query_count'] = $this->db->query_count;
 					$data['query'] = $this->db->queries[0];
 				}
 			}
-		}
+			
+			if (preg_match('/^CREATE|^create/', $this->query) == 1) {
+				if ($this->db->error()['code'] AND $this->db->error()['message']) {
+					$data['total_fields'] = 0;
+					$data['num_rows'] = 0;
+					$data['query_error'] = $this->db->error();
+				} else {	
+					$data['fields_name'] = 0;
+					$data['total_fields'] = 0;
+					$data['num_rows'] = 0;
+					$data['warnings'] = $this->db->conn_id->warning_count; 
+					$data['affected_rows'] = $this->db->affected_rows();
+					$data['query_times'] = $this->db->query_times[0];
+					$data['query_count'] = $this->db->query_count;
+					$data['query'] = $this->db->queries[0];
+				}
+			}
 
-		if (preg_match('/^RENAME|^rename/', $this->query) == 1 OR preg_match('/^INSERT|^insert/', $this->query) == 1 OR preg_match('/^UPDATE|^update/', $this->query) == 1 OR preg_match('/^DELETE|^delete/', $this->query) == 1 OR preg_match('/^ALTER|^alter/', $this->query) == 1) {
+			if (preg_match('/^SHOW|^show/', $this->query) == 1) {
+				if ($this->db->error()['code'] AND $this->db->error()['message']) {
+					$data['total_fields'] = 0;
+					$data['num_rows'] = 0;
+					$data['query_error'] = $this->db->error();
+				} else {
+					$data['affected_rows'] = 0;
+					$data['query_count'] = $this->db->query_count;
+					$data['query_times'] = $this->db->query_times[0];
+					$data['total_fields'] = $this->result->conn_id->field_count;
+					$data['warnings'] = $this->result->conn_id->warning_count;
+					$data['num_rows'] = $this->result->result_id->num_rows;
+					$data['query_result'] = $this->result->result_array();
+					$data['fields_name'] = $this->result->list_fields();
+				}
+			}
+			
+			
 			if ($this->db->error()['code'] AND $this->db->error()['message']) {
 				$data['total_fields'] = 0;
 				$data['num_rows'] = 0;
 				$data['query_error'] = $this->db->error();
-			} else {
-				$data['fields_name'] = 0;
-				$data['total_fields'] = 0;
-				$data['num_rows'] = 0; 
-				$data['warnings'] = $this->db->conn_id->warning_count; 
-				$data['affected_rows'] = 1;
-				$data['query_times'] = $this->db->query_times[0];
-				$data['query_count'] = $this->db->query_count;
-				$data['query'] = $this->db->queries[0];
 			}
-		}
-		
-		if (preg_match('/^CREATE|^create/', $this->query) == 1) {
-			if ($this->db->error()['code'] AND $this->db->error()['message']) {
-				$data['total_fields'] = 0;
-				$data['num_rows'] = 0;
-				$data['query_error'] = $this->db->error();
-			} else {	
-				$data['fields_name'] = 0;
-				$data['total_fields'] = 0;
-				$data['num_rows'] = 0;
-				$data['warnings'] = $this->db->conn_id->warning_count; 
-				$data['affected_rows'] = $this->db->affected_rows();
-				$data['query_times'] = $this->db->query_times[0];
-				$data['query_count'] = $this->db->query_count;
-				$data['query'] = $this->db->queries[0];
-			}
-		}
 
-		if (preg_match('/^SHOW|^show/', $this->query) == 1) {
-			if ($this->db->error()['code'] AND $this->db->error()['message']) {
-				$data['total_fields'] = 0;
-				$data['num_rows'] = 0;
-				$data['query_error'] = $this->db->error();
-			} else {
-				$data['affected_rows'] = 0;
-				$data['query_count'] = $this->db->query_count;
-				$data['query_times'] = $this->db->query_times[0];
-				$data['total_fields'] = $this->result->conn_id->field_count;
-				$data['warnings'] = $this->result->conn_id->warning_count;
-				$data['num_rows'] = $this->result->result_id->num_rows;
-				$data['query_result'] = $this->result->result_array();
-				$data['fields_name'] = $this->result->list_fields();
-			}
+			return $data;
+		} else {
+			redirect('user/login');
 		}
-		
-		
-		if ($this->db->error()['code'] AND $this->db->error()['message']) {
-			$data['total_fields'] = 0;
-			$data['num_rows'] = 0;
-			$data['query_error'] = $this->db->error();
-		}
-
-		return $data;
 	}
 
 	public function db_setting() {

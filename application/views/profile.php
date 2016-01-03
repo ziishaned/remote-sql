@@ -1,25 +1,9 @@
 <?php 
 
 	function humanTiming ($time) {
-
-		$time = time() - $time; // to get the time since that moment
-		$time = ($time<1)? 1 : $time;
-		$tokens = array (
-		    31536000 => 'year',
-		    2592000 => 'month',
-		    604800 => 'week',
-		    86400 => 'day',
-		    3600 => 'hour',
-		    60 => 'minute',
-		    1 => 'second'
-		);
-
-		foreach ($tokens as $unit => $text) {
-		    if ($time < $unit) continue;
-		    $numberOfUnits = floor($time / $unit);
-		    return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
-		}
-
+		$date = explode("-",$time);
+		$new = explode(" ", $date[2]);
+		echo $new[0] . '-' . $date[1] . '-' . $date[0] . ' At ' . $new[1];
 	}
 
 ?>
@@ -67,7 +51,7 @@
 																</div>
 																<div class="form-group">
 																	<label>Joined Since:</label>
-																	<p><?php echo humanTiming(strtotime($user_data->joined_date)) . ' ago'; ?></p>
+																	<p><?php humanTiming($user_data->joined_date); ?></p>
 																</div>
 															</div>
 							        		   			</div>
@@ -193,23 +177,37 @@
 			});
 		} else {
 			$.ajax({
-				url: '',
+				url: 'http://localhost/remote-sql-master/user/change_security',
 				type: 'POST',
 				dataType: 'json',
 				data: {
-					param1: 'value1'
+					data: {
+						'username' : username,
+						'password' : password
+					}
 				},
-			})
-			.done(function() {
-				console.log("success");
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete");
-			});
-			
+				success: function(data) {
+			        if (data == true) {
+			        	toast({
+							heading: 'Successfully updated:',
+						    text: 'Your information has been successfully updated.',
+						    showHideTransition: 'fade',
+						    icon: 'success',
+						    position: {
+						        left: 600,
+						        top: 120
+						    },
+						    stack: false, 
+						    hideAfter: 9000
+						});
+			        } else {
+			        	alert("We are having connection problems.");
+			        }
+			    },
+			    error: function(e) {
+				   alert(e.message);
+				}
+			});			
 		}
 	});
 
