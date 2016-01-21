@@ -21,7 +21,7 @@ Now if you want to apply some queries in your database just click on query optio
 
 ### Tech
 Remote SQL editor uses a number of open source projects to work properly:
-* [Jquery] - Use for animation etc
+* [Jquery] - Used for animation etc
 * [Twitter Bootstrap] - great UI for responsiveness
 * [Javacript] - Form valiation
 * [PHP] - PHP a server-side scripting language
